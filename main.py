@@ -1,6 +1,7 @@
 import pygame # pyright: ignore[reportMissingImports]
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state
+from player import Player
 
 def main():
     print(f"Starting Asteroids with pygame version:{pygame.version.ver}")
@@ -14,6 +15,10 @@ def main():
     dt = 0
     # Use the display.set_mode function to get a new instance of GUI window
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    # Instantiating player
+    player = Player(SCREEN_WIDTH / 2 , SCREEN_HEIGHT / 2)
+
     while True:
         log_state()
         # Check is user has closed the window and exit the game loop if so
@@ -21,6 +26,8 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
+        # Draw player
+        player.draw(screen)
         # Refreshes the screen
         pygame.display.flip()
         # Call the tick method with a value of 60 -> It pauses the game loop until 1/60th of a second has pased.
