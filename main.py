@@ -28,6 +28,7 @@ def main():
         screen.fill("black")
         # Draw player
         player.draw(screen)
+        player.update(dt)
         # Refreshes the screen
         pygame.display.flip()
         # Call the tick method with a value of 60 -> It pauses the game loop until 1/60th of a second has pased.
