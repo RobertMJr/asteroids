@@ -1,6 +1,6 @@
 import pygame # pyright: ignore[reportMissingImports]
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED
+from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED
 
 # Player class
 class Player(CircleShape):
@@ -32,3 +32,19 @@ class Player(CircleShape):
         # right    
         if keys[pygame.K_d]:
             self.rotate(dt)
+        # up
+        if keys[pygame.K_w]:
+            self.move(dt)
+        # down
+        if keys[pygame.K_s]:
+            self.move((dt * -1))
+
+    def move(self, dt):
+        # Unit vector pointing from (0, 0) to (0, 1)
+        unit_vector = pygame.Vector2(0, 1)
+        # Rotate vector by the player's rotation so it points to the same direction as the player
+        rotated_vector = unit_vector.rotate(self.rotation)
+        # Multiply the vector by the player's speed and dt so that the vector is the length that player should move during this frame
+        rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * dt
+        # Add the vector to the player's position to move them
+        self.position += rotated_with_speed_vector
