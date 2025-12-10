@@ -16,6 +16,13 @@ def main():
     # Use the display.set_mode function to get a new instance of GUI window
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # Create groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # Add the Player class to the groups
+    Player.containers = (updatable, drawable)
+
     # Instantiating player
     player = Player(SCREEN_WIDTH / 2 , SCREEN_HEIGHT / 2)
 
@@ -26,9 +33,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        # Draw player
-        player.draw(screen)
-        player.update(dt)
+        # Draw everything
+        for item in drawable:
+            item.draw(screen)
+        updatable.update(dt)
         # Refreshes the screen
         pygame.display.flip()
         # Call the tick method with a value of 60 -> It pauses the game loop until 1/60th of a second has pased.
