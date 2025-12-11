@@ -2,6 +2,8 @@ import pygame # pyright: ignore[reportMissingImports]
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from logger import log_state
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
     print(f"Starting Asteroids with pygame version:{pygame.version.ver}")
@@ -19,12 +21,17 @@ def main():
     # Create groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
-    # Add the Player class to the groups
+    # Add the Player, Asteroid and AsteroidField classes to the groups
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)
 
     # Instantiating player
     player = Player(SCREEN_WIDTH / 2 , SCREEN_HEIGHT / 2)
+    # Instantiate asteroid field
+    asteroid_field = AsteroidField()
 
     while True:
         log_state()
