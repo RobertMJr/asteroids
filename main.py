@@ -1,6 +1,7 @@
 import pygame # pyright: ignore[reportMissingImports]
+import sys
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
-from logger import log_state
+from logger import log_state, log_event
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
@@ -44,6 +45,11 @@ def main():
         for item in drawable:
             item.draw(screen)
         updatable.update(dt)
+        for item in asteroids:
+            if item.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
         # Refreshes the screen
         pygame.display.flip()
         # Call the tick method with a value of 60 -> It pauses the game loop until 1/60th of a second has pased.
