@@ -5,6 +5,7 @@ from logger import log_state, log_event
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 
 def main():
     print(f"Starting Asteroids with pygame version:{pygame.version.ver}")
@@ -23,17 +24,19 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
-    # Add the Player, Asteroid and AsteroidField classes to the groups
+    # Add the Player, Asteroid, Shot and AsteroidField classes to the groups
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
+    Shot.containers = (shots, updatable, drawable)
 
     # Instantiating player
     player = Player(SCREEN_WIDTH / 2 , SCREEN_HEIGHT / 2)
     # Instantiate asteroid field
     asteroid_field = AsteroidField()
-
+    
     while True:
         log_state()
         # Check is user has closed the window and exit the game loop if so
